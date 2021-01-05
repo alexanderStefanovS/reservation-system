@@ -1,0 +1,65 @@
+@import "~bootstrap/dist/css/bootstrap.css";
+@import "~@ng-select/ng-select/themes/default.theme.css";
+
+.color-orange {
+  color: #ff8913
+}
+
+.color-white {
+  color: white;
+}
+
+.b-color-orange {
+  background-color: #ff8913;
+}
+
+.list-group-item.active {
+  background-color: #ff8913 !important;
+  border-color: #ff8913 !important;
+}
+
+textarea {
+  resize: none;
+}
+
+.description {
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+.c1-height {
+  height: 35rem;
+}
+
+@media screen and (min-width: 990px) {
+  .c2-height {
+    height: 16.5rem;
+  }
+  .c4-height {
+    height: 18rem;
+  }
+  .c3-height {
+    height: 15rem;
+  }
+}
+
+@media screen and (max-width: 990px) {
+  .c2-1-height {
+    height: auto;
+  }
+  .c2-2-height {
+    height: 23rem
+  }
+}
+
+@media screen and (min-width: 1170px) {
+  .list-height-min {
+    max-height: calc(100% - 5rem)
+  }
+}
+
+@media screen and (max-width: 1170px) and (min-width: 990px) {
+  .list-height-max {
+    max-height: calc(100% - 6.5rem)
+  }
+}

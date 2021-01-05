@@ -1,0 +1,14 @@
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #ff8913">
+  <button class="navbar-toggler" type="button" (click)="isNavbarCollapsed = !isNavbarCollapsed" data-toggle="collapse"
+    data-target="#navbarNav" aria-controls="navbarNav" [attr.aria-expanded]="!isNavbarCollapsed">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div [ngbCollapse]="isNavbarCollapsed" class="collapse navbar-collapse justify-content-between" id="navbarNav">
+    <h5 class="text-white">СИСТЕМА ЗА РЕЗЕРВАЦИИ В ЗАВЕДЕНИЯ</h5>
+    <ul *ngIf="inner" class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link h5" routerLink="/login" routerLinkActive="active">Изход</a>
+      </li>
+    </ul>
+  </div>
+</nav>

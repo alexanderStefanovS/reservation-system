@@ -1,0 +1,95 @@
+<app-menu [inner]="false"></app-menu>
+<div class="container mt-5">
+  <h2 class="ml-5 mb-5 color-orange">Регистрация</h2>
+  <form #form="ngForm">
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="form-group">
+          <label for="first-name">Име<span class="text-danger">*</span></label>
+          <input #firstName="ngModel" id="first-name" name="first-name" type="text" [(ngModel)]="user.firstName"
+            class="form-control" placeholder="Въведете име" required
+            [ngClass]="{'is-invalid': firstName.invalid, 'is-valid': firstName.valid}">
+        </div>
+        <div class="form-group">
+          <label for="email">Email<span class="text-danger">*</span></label>
+          <input #email="ngModel" id="email" type="email" name="email" [(ngModel)]="user.email" class="form-control"
+            placeholder="Въведете email" [ngClass]="{'is-invalid': email.invalid, 'is-valid': email.valid}" required>
+        </div>
+        <div class="form-group">
+          <label for="password">Парола<span class="text-danger">*</span></label>
+          <input #password="ngModel" id="password" name="password" [(ngModel)]="user.password" type="password"
+            class="form-control" placeholder="Въведете парола" required
+            [ngClass]="{'is-invalid': password.invalid, 'is-valid': password.valid}">
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="form-group">
+          <label for="last-name">Фамилия<span class="text-danger">*</span></label>
+          <input #lastName="ngModel" id="last-name" type="text" name="last-name" [(ngModel)]="user.lastName"
+            class="form-control" placeholder="Въведете фамилия" required
+            [ngClass]="{'is-invalid': lastName.invalid, 'is-valid': lastName.valid}">
+        </div>
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label for="phone">Телефон<span class="text-danger">*</span></label>
+              <input #phone="ngModel" id="phone" type="tel" name="phone" [(ngModel)]="user.phone" class="form-control"
+                placeholder="Въведете телефонен номер" pattern="08[789][0-9]{7}" required
+                [ngClass]="{'is-invalid': phone.invalid, 'is-valid': phone.valid}">
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label for="role">Роля<span class="text-danger">*</span></label>
+              <ng-select id="role" [items]="roles" name="role" [(ngModel)]="user.rolesId" bindLabel="name" required
+                bindValue="id" placeholder="Изберете роля" (change)="onRoleChanged($event)">
+              </ng-select>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="re-password">Потвърждаване на паролата<span class="text-danger">*</span></label>
+          <input #rePassword="ngModel" [(ngModel)]="rePass" id="re-password" name="re-password" type="password"
+            class="form-control" placeholder="Въведете парола"
+            [ngClass]="{'is-invalid': rePassword.invalid, 'is-valid': rePassword.valid}" required>
+        </div>
+      </div>
+    </div>
+    <h5 *ngIf="isManager" class="color-orange">Информация за заведението</h5>
+    <div *ngIf="isManager" class="row">
+      <div class="form-group col-md-6">
+        <label for="place-name">Име на заведението<span class="text-danger">*</span></label>
+        <input #name="ngModel" [(ngModel)]="place.name" id="place-name" name="name" type="text" class="form-control"
+          required placeholder="Въведете име на заведението"
+          [ngClass]="{'is-invalid': name.invalid, 'is-valid': name.valid}">
+      </div>
+      <div class="col-lg-6">
+        <div class="form-group">
+          <label for="type">Тип на заведението<span class="text-danger">*</span></label>
+          <ng-select id="type" [items]="placeTypes" name="type" [(ngModel)]="place.placeTypesId" bindLabel="type"
+            required bindValue="id" placeholder="Изберете тип на заведението">
+          </ng-select>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="isManager" class="row">
+      <div class="form-group col-md-12">
+        <label for="desc">Описание<span class="text-danger">*</span></label>
+        <textarea #description="ngModel" [(ngModel)]="place.description" name="desc" id="desc" type="tel"
+          class="form-control" placeholder="Въведете описание" required
+          [ngClass]="{'is-invalid': description.invalid, 'is-valid': description.valid}">
+        </textarea>
+      </div>
+    </div>
+    <h6 *ngIf="user.password && rePass && user.password !== rePass" class="text-danger">Паролите трябва да съвпадат</h6>
+    <h6 *ngIf="form.invalid" class="text-danger">Моля, попълнете всички задължителни полета.</h6>
+    <button class="btn my-3 b-color-orange color-white" [disabled]="form.invalid || (user.password !== rePass)"
+      (click)="onClickRegister()">
+      Регистрирай се
+    </button>
+  </form>
+</div>
+
+<swal #successSwal title="Регистрацията е успешна" icon="success" [showConfirmButton]="true"
+  (confirm)="onSuccessRegistration()" [allowOutsideClick]="false">
+</swal>

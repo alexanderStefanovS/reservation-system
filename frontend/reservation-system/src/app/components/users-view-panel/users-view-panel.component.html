@@ -1,0 +1,185 @@
+<app-menu></app-menu>
+<div class="container-fluid mt-1 p-4 overflow-auto">
+  <div class="card" style="max-height: 15rem;">
+    <div class="card-header">
+      <h4 class="color-orange">Заявки за резервация</h4>
+    </div>
+    <div class="card-body">
+      <div *ngFor="let res of userReservations; let i = index">
+        <svg class="ml-2 mb-2 d-inline" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8 16" width="8" height="16">
+          <path fill-rule="evenodd" d="M7.5 8l-5 5L1 11.5 4.75 8 1 4.5 2.5 3l5 5z"></path>
+        </svg>
+        <h5 class="d-inline">
+          Заведение: <span class="color-orange">{{res.place?.name}}</span>;
+          Дата: <span class="color-orange">{{res.date?.getDate()}}.{{res.date?.getMonth()}}.{{res.date?.getFullYear()}} г. {{res.date?.getHours()}}:{{res.date?.getMinutes()}} ч.</span>;
+          Статус:
+          <span class="text-success" *ngIf="res.isApproved == 1">Одобрена</span>
+          <span class="text-danger" *ngIf="res.isApproved == 0">Отакзана</span>
+          <span class="text-warning" *ngIf="res.isApproved == null">Очаква обобрение</span>
+        </h5>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-3">
+    <div class="col-lg-4">
+      <div class="card c1-height">
+        <div class="card-header">
+          <h4 class="color-orange">Заведения</h4>
+        </div>
+        <div class="card-body overflow-auto">
+          <div class="input-group input-group-sm mb-2">
+            <input class="form-control" type="search" placeholder="Търсене" aria-label="Търсене по ключова дума"
+              (input)="onSearchPlace($event.target.value)">
+          </div>
+          <div class="form-check d-inline mr-2" *ngFor="let type of placeTypes; let i = index">
+            <label class="form-check-label" for="{{type.type}}">
+              <input class="form-check-input" type="checkbox" id="{{type.type}}" (click)="onTypeChecked(type.id, i)"
+                [checked]="type.isChecked">
+              {{type.type}}
+            </label>
+          </div>
+          <div class="list-group overflow-auto mt-2 list-height-min list-height-max">
+            <button *ngFor="let place of selectedPlaces; let i = index" type="button"
+              class="list-group-item list-group-item-action" [ngClass]="{'active': selectedPlace === place}"
+              (click)="onSelectPlace(place, i)">
+              {{place.name}}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 mt-3">
+      <div class="jumbotron-fluid overflow-auto c4-height c2-1-height">
+        <h4>{{selectedPlace?.name}}</h4>
+        <div class="description">
+          {{selectedPlace?.description}}
+        </div>
+        <!-- <div class="description mt-2">
+          {{selectedPlace?.address}}
+        </div> -->
+      </div>
+      <div class="jumbotron-fluid b-color-orange p-3 pb-2 mt-3 overflow-auto c3-height c2-2-height">
+        <h4 class="color-white">Резервация</h4>
+        <form #resForm="ngForm">
+          <div class="form-row">
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label class="color-white mb-0" for="date">Изберете дата</label>
+                <div class="input-group">
+                  <input #resDate="ngModel" class="form-control" placeholder="yyyy-mm-dd" id="date" [(ngModel)]="date"
+                    name="dp" [(ngModel)]="date" ngbDatepicker #d="ngbDatepicker" container="body" required
+                    [ngClass]="{'is-invalid': resDate.invalid, 'is-valid': resDate.valid}">
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 16" width="18" height="20">
+                        <path fill-rule="evenodd"
+                          d="M13 2h-1v1.5c0 .28-.22.5-.5.5h-2c-.28 0-.5-.22-.5-.5V2H6v1.5c0 .28-.22.5-.5.5h-2c-.28 0-.5-.22-.5-.5V2H2c-.55 0-1 .45-1 1v11c0 .55.45 1 1 1h11c.55 0 1-.45 1-1V3c0-.55-.45-1-1-1zm0 12H2V5h11v9zM5 3H4V1h1v2zm6 0h-1V1h1v2zM6 7H5V6h1v1zm2 0H7V6h1v1zm2 0H9V6h1v1zm2 0h-1V6h1v1zM4 9H3V8h1v1zm2 0H5V8h1v1zm2 0H7V8h1v1zm2 0H9V8h1v1zm2 0h-1V8h1v1zm-8 2H3v-1h1v1zm2 0H5v-1h1v1zm2 0H7v-1h1v1zm2 0H9v-1h1v1zm2 0h-1v-1h1v1zm-8 2H3v-1h1v1zm2 0H5v-1h1v1zm2 0H7v-1h1v1zm2 0H9v-1h1v1z">
+                        </path>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label class="color-white mb-0" for="time">
+                  Изберете час
+                </label>
+                <input #resTime="ngModel" required class="form-control" type="time" [(ngModel)]="time" name="time"
+                  id="time" [ngClass]="{'is-invalid': resTime.invalid, 'is-valid': resTime.valid}">
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label class="color-white mb-0" for="people">Изберете брой хора</label>
+                <input #resPeople="ngModel" required [(ngModel)]="reservation.numOfPeople" name="people"
+                  class="form-control" type="number" id="people" min="1" max="25"
+                  [ngClass]="{'is-invalid': resPeople.invalid, 'is-valid': resPeople.valid}">
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="d-flex justify-content-center">
+                <button [disabled]="resForm.invalid" class="btn bg-secondary color-white mt-4" (click)="reserve()">
+                  Заявете резервация
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="col-lg-4 mt-3">
+      <div class="card c2-height">
+        <div class="card-header">
+          <h4 class="color-orange">Меню</h4>
+        </div>
+        <div class="card-body pl-3 p-2 overflow-auto">
+          <div>
+            <button class="btn" (click)="isFoodCollapsed = !isFoodCollapsed" [attr.aria-expanded]="!isFoodCollapsed"
+              aria-controls="food">
+              Храни
+            </button>
+            <svg class="ml-2" *ngIf="!isFoodCollapsed" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 16" width="10"
+              height="16">
+              <path fill-rule="evenodd" d="M5 11L0 6l1.5-1.5L5 8.25 8.5 4.5 10 6l-5 5z"></path>
+            </svg>
+            <svg class="ml-2" *ngIf="isFoodCollapsed" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8 16" width="8"
+              height="16">
+              <path fill-rule="evenodd" d="M7.5 8l-5 5L1 11.5 4.75 8 1 4.5 2.5 3l5 5z"></path>
+            </svg>
+          </div>
+          <div id="food" [ngbCollapse]="isFoodCollapsed" class="overflow-auto"
+            [ngStyle]="isDrinkCollapsed ? {'height': '57%'} : {'height': '30%'}">
+            <ul class="list-group">
+              <li class="list-group-item small list-group-flush" *ngFor="let food of selectedPlace?.menu.foods">
+                {{food.name}} {{food.price}}</li>
+            </ul>
+          </div>
+          <hr class="m-0">
+          <div>
+            <button class="btn" (click)="isDrinkCollapsed = !isDrinkCollapsed" [attr.aria-expanded]="!isDrinkCollapsed"
+              aria-controls="drink">
+              Напитки
+            </button>
+            <svg class="ml-2" *ngIf="!isDrinkCollapsed" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 16"
+              width="10" height="16">
+              <path fill-rule="evenodd" d="M5 11L0 6l1.5-1.5L5 8.25 8.5 4.5 10 6l-5 5z"></path>
+            </svg>
+            <svg class="ml-2" *ngIf="isDrinkCollapsed" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8 16" width="8"
+              height="16">
+              <path fill-rule="evenodd" d="M7.5 8l-5 5L1 11.5 4.75 8 1 4.5 2.5 3l5 5z"></path>
+            </svg>
+          </div>
+          <div id="drink" [ngbCollapse]="isDrinkCollapsed" class="overflow-auto"
+            [ngStyle]="isFoodCollapsed ? {'height': '57%'} : {'height': '30%'}">
+            <ul class="list-group">
+              <li class="list-group-item small list-group-flush" *ngFor="let drink of selectedPlace?.menu.drinks">
+                {{drink.name}} {{drink.price}}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="card mt-3 overflow-auto c2-height">
+        <div class="card-header">
+          <h4 class="color-orange">Събития</h4>
+        </div>
+        <div class="card-body overflow-auto" style="height: 80%">
+          <ul class="list-group">
+            <li *ngFor="let event of selectedPlace?.events" class="list-group-item">
+              {{event.name}} {{event.date.getDate()}}.{{event.date.getMonth()}}.{{event.date.getFullYear()}} г.
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<swal #successSwal icon="success" [showConfirmButton]="true">
+  <div *swalPortal>
+    <h4>{{ message }}</h4>
+  </div>
+</swal>

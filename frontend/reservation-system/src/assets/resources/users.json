@@ -1,0 +1,107 @@
+[
+	{
+		"firstName": "Мария",
+		"lastName": "Димитрова",
+		"email": "mariad523@abv.bg",
+		"phone": "0895443427",
+		"role": "мениджър на заведение"
+	},
+	{
+		"firstName": "Виржиния",
+		"lastName": "Иванова",
+		"email": "v_ivanova34@abv.bg",
+		"phone": "0896533989",
+		"role": "мениджър на заведение"
+	},
+	{
+		"firstName": "Александър",
+		"lastName": "Петров",
+		"email": "aleks1_p061@gmail.com",
+		"phone": "0883500336",
+		"role": "мениджър на заведение"
+	},
+	{
+		"firstName": "Георги",
+		"lastName": "Иванов",
+		"email": "ivanov2344@abv.bg",
+		"phone": "0895598199",
+		"role": "администратор"
+	},
+	{
+		"firstName": "Димитрия",
+		"lastName": "Донева",
+		"email": "didid_d1@gmail.com",
+		"phone": "0899448278",
+		"role": "мениджър на заведение"
+	},
+	{
+		"firstName": "Стефка",
+		"lastName": "Цветанова",
+		"email": "stefka_cvetanova9@gmail.com",
+		"phone": "0880876456",
+		"role": "потребител"
+	},
+	{
+		"firstName": "Любомир",
+		"lastName": "Кръстев",
+		"email": "krystev23@abv.bg",
+		"phone": "0899070905",
+		"role": "потребител"
+	},
+	{
+		"firstName": "Борислав",
+		"lastName": "Георгиев",
+		"email": "borislav_georgiev3235@gmail.com",
+		"phone": "0889560023",
+		"role": "потребител"
+	},
+	{
+		"firstName": "Димитър",
+		"lastName": "Христов",
+		"email": "dimityrh192@gmail.com",
+		"phone": "0890062332",
+		"role": "потребител"
+	},
+	{
+		"firstName": "Лилия",
+		"lastName": "Петрова",
+		"email": "liliyali223@gmail.com",
+		"phone": "0892356667",
+		"role": "потребител"
+	},
+	{
+		"firstName": "Марио",
+		"lastName": "Костадинов",
+		"email": "mario__kostadinov21@gmail.com",
+		"phone": "0888639963",
+		"role": "потребител"
+	},
+	{
+		"firstName": "Катерина",
+		"lastName": "Симеонова",
+		"email": "katerina_simeonova17@abv.bg",
+		"phone": "0899966390",
+		"role": "потребител"
+	},
+	{
+		"firstName": "Константин",
+		"lastName": "Илиев",
+		"email": "kkiliev156@abv.bg",
+		"phone": "0884899256",
+		"role": "потребител"
+	},
+	{
+		"firstName": "Анна",
+		"lastName": "Благоева",
+		"email": "anna__b13@gmail.com",
+		"phone": "0885512234",
+		"role": "потребител"
+	},
+	{
+		"firstName": "Атанас",
+		"lastName": "Димитров",
+		"email": "atanasdimitrov123@abv.bg",
+		"phone": "0898574312",
+		"role": "потребител"
+	}
+]

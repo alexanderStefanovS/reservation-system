@@ -1,0 +1,48 @@
+<app-menu [inner]="false"></app-menu>
+<div class="container mt-5">
+  <h2 class="text-center mb-3 color-orange">Вход</h2>
+  <form #form="ngForm">
+    <div class="row">
+      <div class="col-md-4"></div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="eMail">E-mail<span class="text-danger">*</span></label>
+          <input #eMail="ngModel" id="eMail" name="eMail" type="email" [(ngModel)]="model.email"
+            class="form-control" placeholder="Въведете E-mail" required
+            [ngClass]="{'is-invalid': eMail.invalid, 'is-valid': eMail.valid}">
+        </div>
+      </div>
+      <div class="col-md-4"></div>
+    </div>
+    <div class="row">
+      <div class="col-md-4"></div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="password">Парола<span class="text-danger">*</span></label>
+          <input #password="ngModel" id="password" name="password" [(ngModel)]="model.password" type="password"
+            class="form-control" placeholder="Въведете парола" required
+            [ngClass]="{'is-invalid': password.invalid, 'is-valid': password.valid}">
+        </div>
+      </div>
+      <div class="col-md-4"></div>
+    </div>
+    <div class="row">
+      <div class="col-md-4"></div>
+      <div class="col-md-4 d-flex justify-content-between">
+        <button class="btn my-3 b-color-orange color-white" [disabled]="form.invalid"
+          (click)="onClickLogin()">
+          Вход
+        </button>
+        <button class="btn my-3 btn-outline-primary" (click)="redirectToRegisterPage()">
+          Регистрирай се
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<swal #errorSwal icon="error" [showConfirmButton]="true">
+  <div *swalPortal>
+    <h4>{{ errMessage }}</h4>
+  </div>
+</swal>

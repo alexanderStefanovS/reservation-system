@@ -1,0 +1,167 @@
+<app-menu></app-menu>
+<div class="container-fluid mt-3 p-4">
+  <div class="row">
+    <div class="col-lg-4">
+      <div class="card c1-height">
+        <div class="card-header">
+          <h4 class="color-orange">Описание и меню</h4>
+        </div>
+        <div class="card-body p-3">
+          <form #form="ngForm">
+            <div class="form-group">
+              <label for="desc">Описание</label>
+              <textarea [(ngModel)]="place.description" class="form-control" id="desc" name="desc" rows="4"></textarea>
+              <button class="btn b-color-orange color-white mt-2" (click)="onSaveDescription()">
+                Запиши описанието
+              </button>
+            </div>
+          </form>
+          <form class="overflow-auto" style="height: calc(100% - 12rem)">
+            <label class="d-block mb-0">Меню</label>
+            <label class="mb-0 mt-2">Храни</label>
+            <div *ngFor="let food of place?.menu.foods" class="form-row mt-1" style="width: 97%">
+              <div class="col-6">
+                <input [value]="food.name" type="text" class="form-control" readonly>
+              </div>
+              <div class="col-5">
+                <input [value]="food.price" type="text" class="form-control d-inline" readonly>
+              </div>
+              <div class="col-1">
+                <button class="btn btn-sm btn-outline-danger" placement="left" ngbTooltip="Премахни"
+                  (click)="removeFood(food.id)">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 16" width="12" height="16">
+                    <path fill-rule="evenodd"
+                      d="M11 2H9c0-.55-.45-1-1-1H5c-.55 0-1 .45-1 1H2c-.55 0-1 .45-1 1v1c0 .55.45 1 1 1v9c0 .55.45 1 1 1h7c.55 0 1-.45 1-1V5c.55 0 1-.45 1-1V3c0-.55-.45-1-1-1zm-1 12H3V5h1v8h1V5h1v8h1V5h1v8h1V5h1v9zm1-10H2V3h9v1z">
+                    </path>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <form #foodForm="ngForm">
+              <div class="form-row mt-1" style="width: 97%">
+                <div class="col-6">
+                  <input #name1="ngModel" [(ngModel)]="foodModel.name" name="name1" placeholder="име" type="text"
+                    class="form-control" required [ngClass]="{'is-invalid': name1.invalid, 'is-valid': name1.valid}">
+                </div>
+                <div class="col-5">
+                  <input #price1="ngModel" [(ngModel)]="foodModel.price" name="price1" placeholder="цена" type="text"
+                    class="form-control" required [ngClass]="{'is-invalid': price1.invalid, 'is-valid': price1.valid}">
+                </div>
+                <div class="col-1">
+                  <button [disabled]="foodForm.invalid" class="btn btn-sm btn-outline-success" placement="left"
+                    ngbTooltip="Добави" (click)="addFood()">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 16" width="12" height="16">
+                      <path fill-rule="evenodd" d="M12 9H7v5H5V9H0V7h5V2h2v5h5v2z"></path>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </form>
+            <label class="mb-0 mt-2">Напитки</label>
+            <div *ngFor="let drink of place?.menu.drinks" class="form-row mt-1" style="width: 97%">
+              <div class="col-6">
+                <input [value]="drink.name" type="text" class="form-control" readonly required>
+              </div>
+              <div class="col-5">
+                <input [value]="drink.price" type="text" class="form-control" readonly required>
+              </div>
+              <div class="col-1">
+                <button class="btn btn-sm btn-outline-danger" placement="left" ngbTooltip="Премахни"
+                  (click)="removeDrink(drink.id)">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 16" width="12" height="16">
+                    <path fill-rule="evenodd"
+                      d="M11 2H9c0-.55-.45-1-1-1H5c-.55 0-1 .45-1 1H2c-.55 0-1 .45-1 1v1c0 .55.45 1 1 1v9c0 .55.45 1 1 1h7c.55 0 1-.45 1-1V5c.55 0 1-.45 1-1V3c0-.55-.45-1-1-1zm-1 12H3V5h1v8h1V5h1v8h1V5h1v8h1V5h1v9zm1-10H2V3h9v1z">
+                    </path>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <form #drinkForm="ngForm">
+              <div class="form-row mt-1" style="width: 97%">
+                <div class="col-6">
+                  <input #name2="ngModel" [(ngModel)]="drinkModel.name" name="name2" placeholder="име" required type="text"
+                    class="form-control" [ngClass]="{'is-invalid': name2.invalid, 'is-valid': name2.valid}">
+                </div>
+                <div class="col-5">
+                  <input #price2="ngModel" [(ngModel)]="drinkModel.price" name="price2" placeholder="цена" required type="text"
+                    class="form-control" [ngClass]="{'is-invalid': price2.invalid, 'is-valid': price2.valid}">
+                </div>
+                <div class="col-1">
+                  <button class="btn btn-sm btn-outline-success" [disabled]="drinkForm.invalid" placement="left"
+                    ngbTooltip="Добави" (click)="addDrink()">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 16" width="12" height="16">
+                      <path fill-rule="evenodd" d="M12 9H7v5H5V9H0V7h5V2h2v5h5v2z"></path>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </form>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <div class="card c1-height">
+        <div class="card-header d-flex justify-content-between">
+          <h4 class="color-orange">Събития</h4>
+          <button class="btn btn-outline-success btn-sm" ngbTooltip="Добави събитие" style="width: 40px"
+            (click)="openAddEventModal()">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 16" width="12" height="16">
+              <path fill-rule="evenodd" d="M12 9H7v5H5V9H0V7h5V2h2v5h5v2z"></path>
+            </svg>
+          </button>
+        </div>
+        <div class="card-body overflow-auto" style="height: 80%">
+          <ul class="list-group">
+            <li *ngFor="let event of place?.events" class="list-group-item d-flex justify-content-between">
+              <span>{{ event.name }} {{event.date.getDate()}}.{{event.date.getMonth() - 1}}.{{event.date.getFullYear()}} г.</span>
+              <button class="btn btn-sm btn-outline-danger" ngbTooltip="Премахни събитието" placement="top-right"
+                (click)="removeEvent(event.id)">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 16" width="12" height="16">
+                  <path fill-rule="evenodd"
+                    d="M11 2H9c0-.55-.45-1-1-1H5c-.55 0-1 .45-1 1H2c-.55 0-1 .45-1 1v1c0 .55.45 1 1 1v9c0 .55.45 1 1 1h7c.55 0 1-.45 1-1V5c.55 0 1-.45 1-1V3c0-.55-.45-1-1-1zm-1 12H3V5h1v8h1V5h1v8h1V5h1v8h1V5h1v9zm1-10H2V3h9v1z">
+                  </path>
+                </svg>
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <div class="card c1-height">
+        <div class="card-header">
+          <h4 class="color-orange">Заявки за резервация</h4>
+        </div>
+        <div class="card-body overflow-auto">
+          <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
+            <ngb-panel *ngFor="let reservation of place.reservations; let i = index">
+              <ng-template ngbPanelTitle>
+                <span>{{reservation.user?.firstName}} {{reservation.user?.lastName}}</span>
+              </ng-template>
+              <ng-template ngbPanelContent>
+                <p>Име: {{reservation.user?.firstName}} {{reservation.user?.lastName}}</p>
+                <p>Телефон: {{reservation.user?.phone}}</p>
+                <p>Дата: {{reservation.date.getDate()}}.{{reservation.date.getMonth()}}.{{reservation.date.getFullYear()}} г.</p>
+                <p>Час: {{reservation.date.getHours()}}:{{reservation.date.getMinutes()}}</p>
+                <div class="d-flex justify-content-end">
+                  <button class="btn btn-outline-success" (click)="acceptReservation(reservation.id)">Одобри</button>
+                  <button class="btn btn-outline-danger ml-2"
+                    (click)="declineReservation(reservation.id)">Отхвърли</button>
+                </div>
+              </ng-template>
+            </ngb-panel>
+          </ngb-accordion>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-add-event #addEvent (saveEvent)="saveEvent($event)"></app-add-event>
+
+<swal #successSwal icon="success" [showConfirmButton]="true">
+  <div *swalPortal>
+    <h4>{{ message }}</h4>
+  </div>
+</swal>
