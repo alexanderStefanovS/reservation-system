@@ -6,16 +6,16 @@ require_once "../../models/system-log.php";
 function getLog($connection, $date, $usersId) {
   $sql = "SELECT * FROM system_log";
   
-  if ($date || $usersId) {
+  if ($date != 'null' || $usersId != 'null') {
     $sql = $sql." WHERE";
   }
 
-  if ($date) {
-    $sql = $sql." date = :date";
+  if ($date != 'null') {
+    $sql = $sql." DATE(date) = :date";
   }
 
-  if ($usersId) {
-    if ($date) {
+  if ($usersId != 'null') {
+    if ($date != 'null') {
       $sql = $sql." AND";
     }
     $sql = $sql." users_id = :usersId";
@@ -23,15 +23,18 @@ function getLog($connection, $date, $usersId) {
 
   $query = $connection->prepare($sql);
   
-  if ($date && !$usersId) {
-    $query->execute(["date" => $date]);
-  } else if ($usersId && !$date) {
-    $query->execute(["usersId" => $usersId]);
-  } else if ($date && $usersId) {
-    $query->execute(["date" => $date, "usersId" => $usersId]);
+  $executeArray = null;
+  if ($date != 'null' && $usersId == 'null') {
+    $executeArray = ["date" => $date];
+  } else if ($usersId != 'null' && $date == 'null') {
+    $executeArray = ["usersId" => $usersId];
+  } else if ($date != 'null' && $usersId != 'null') {
+    $executeArray = ["date" => $date, "usersId" => $usersId];
   } else {
-    $query->execute([]);
+    $executeArray = [];
   }
+
+  $query->execute($executeArray);
 
   $logs = array();
 	while ($row = $query->fetch()) {

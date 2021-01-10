@@ -5,8 +5,8 @@ require_once "../../logger/logger.php";
 
 session_start();
 
-function deleteEvent($connection, $id) {
-  $sql = 'DELETE FROM events WHERE id = :id';
+function deleteUser($connection, $id) {
+  $sql = 'DELETE FROM users WHERE id = :id';
 	$query = $connection->prepare($sql);
   $query->execute(["id" => $id]);
 }
@@ -14,7 +14,7 @@ function deleteEvent($connection, $id) {
 try {
   $database = new DB();
   $connection = $database->getConnection();
-  deleteEvent($connection, $_REQUEST["id"]);
+  deleteUser($connection, $_REQUEST["id"]);
 }
 catch (PDOException $e) {
 	echo json_encode([
@@ -27,7 +27,7 @@ catch (PDOException $e) {
 
 $usersId = $_SESSION['usersId'];
 $logger = new Logger($connection);
-$logger->log("Потребителят изтри събитие.", $usersId);
+$logger->log("Потребителят изтри потребител.", $usersId);
 
 $response = json_encode([
   'success' => true,

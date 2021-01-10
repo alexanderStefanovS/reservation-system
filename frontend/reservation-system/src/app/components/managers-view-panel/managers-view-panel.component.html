@@ -114,7 +114,7 @@
         <div class="card-body overflow-auto" style="height: 80%">
           <ul class="list-group">
             <li *ngFor="let event of place?.events" class="list-group-item d-flex justify-content-between">
-              <span>{{ event.name }} {{event.date.getDate()}}.{{event.date.getMonth() - 1}}.{{event.date.getFullYear()}} г.</span>
+              <span>{{ event.name }} {{event.date.getDate()}}.{{event.date.getMonth() + 1}}.{{event.date.getFullYear()}} г.</span>
               <button class="btn btn-sm btn-outline-danger" ngbTooltip="Премахни събитието" placement="top-right"
                 (click)="removeEvent(event.id)">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 16" width="12" height="16">
@@ -142,7 +142,8 @@
               <ng-template ngbPanelContent>
                 <p>Име: {{reservation.user?.firstName}} {{reservation.user?.lastName}}</p>
                 <p>Телефон: {{reservation.user?.phone}}</p>
-                <p>Дата: {{reservation.date.getDate()}}.{{reservation.date.getMonth()}}.{{reservation.date.getFullYear()}} г.</p>
+                <p>Брой хора: {{ reservation.numOfPeople }}</p>
+                <p>Дата: {{reservation.date.getDate()}}.{{reservation.date.getMonth() + 1}}.{{reservation.date.getFullYear()}} г.</p>
                 <p>Час: {{reservation.date.getHours()}}:{{reservation.date.getMinutes()}}</p>
                 <div class="d-flex justify-content-end">
                   <button class="btn btn-outline-success" (click)="acceptReservation(reservation.id)">Одобри</button>

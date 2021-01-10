@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {DataLoaderService} from '../../services/data-loader.service';
 import {UserModel} from '../../models/user-model';
 import {NgbDate} from '@ng-bootstrap/ng-bootstrap';
 import { RoleModel } from 'src/app/models/role-model';
 import { SystemLogModel } from 'src/app/models/system-log-model';
+import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 
 @Component({
   selector: 'app-administrators-view-panel',
@@ -12,18 +13,14 @@ import { SystemLogModel } from 'src/app/models/system-log-model';
 })
 export class AdministratorsViewPanelComponent implements OnInit {
 
-  public users: UserModel[] = [];
-  public selectedUser: UserModel;
-  public id: number = 15;
-  public date: NgbDate;
-  public firstName: string;
-  public lastName: string;
-  public isVisible = false;
-  public isVisibleToast = false;
+  public users: UserModel[];
+  public systemLog: SystemLogModel[];
+  public selectedUserId: number = null;
+  public date = null;
+
+  @ViewChild('deleteUersSwal') public deleteUersSwal: SwalComponent;
 
   constructor(private dataLoader: DataLoaderService) {
-    const today = new Date();
-    this.date = new NgbDate(today.getFullYear(), today.getMonth(), today.getDate());
   }
 
   ngOnInit(): void {
@@ -33,13 +30,16 @@ export class AdministratorsViewPanelComponent implements OnInit {
   private loadUsers() {
     this.dataLoader.loadAll(UserModel.urlGetАll)
       .subscribe((data: any) => {
-        data.value.forEach((user: any) => {
-          this.users.push(new UserModel(user));
+        this.users = [];
+        data.value.forEach((user: UserModel) => {
+          if (user.rolesId !== 3) {
+            this.users.push(new UserModel(user));
+          }
         });
+        this.selectedUserId = this.users[0].id;
         this.users.forEach(user => {
           this.loadUserRole(user);
         });
-        this.selectedUser = this.users[0];
       });
   }
 
@@ -50,22 +50,42 @@ export class AdministratorsViewPanelComponent implements OnInit {
       });
   }
 
-  removeUser(email: string) {
-    this.users = this.users.filter((user) => user.email !== email);
-    this.isVisibleToast = true;
+  removeUser(id: number) {
+    this.dataLoader.deleteById(UserModel.urlDelete, id)
+      .subscribe(() => {
+        this.users = this.users.filter((user) => user.id !== id);
+        this.deleteUersSwal.fire();
+      });
   }
 
   onClickSearch() {
-    const date = this.prepareReservationDate();
-    this.dataLoader.loadByParam(SystemLogModel.urlSearch, `usersId=${this.selectedUser.id}&date=${date}`)
+    let date = null;
+    if (this.date) {
+      date = this.prepareReservationDate();
+    }
+
+    this.dataLoader.loadByParam(SystemLogModel.urlSearch, `usersId=${this.selectedUserId}&date=${date}`)
       .subscribe((data: any) => {
-        console.log(data);
+        this.systemLog = [];
+        data.value.forEach((log: SystemLogModel) => {
+          this.systemLog.push(new SystemLogModel(log));
+        });
+        this.systemLog.forEach(log => {
+          this.loadLogUser(log);
+        })
+      });
+  }
+
+  private loadLogUser(log: SystemLogModel) {
+    this.dataLoader.loadByParam(UserModel.urlGet, `id=${log.usersId}`)
+      .subscribe((data: any) => {
+        log.user = new UserModel(data.value);
       });
   }
 
   private prepareReservationDate() {
     const dateString = `${this.date.year}-${this.date.month}-${this.date.day}`;
-    return new Date(Date.parse(dateString));
+    return dateString;
   }
 
 }

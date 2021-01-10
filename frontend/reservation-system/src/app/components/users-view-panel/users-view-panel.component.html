@@ -1,6 +1,6 @@
 <app-menu></app-menu>
 <div class="container-fluid mt-1 p-4 overflow-auto">
-  <div class="card" style="max-height: 15rem;">
+  <div *ngIf="userReservations?.length" class="card" style="max-height: 15rem;">
     <div class="card-header">
       <h4 class="color-orange">Заявки за резервация</h4>
     </div>
@@ -11,7 +11,7 @@
         </svg>
         <h5 class="d-inline">
           Заведение: <span class="color-orange">{{res.place?.name}}</span>;
-          Дата: <span class="color-orange">{{res.date?.getDate()}}.{{res.date?.getMonth()}}.{{res.date?.getFullYear()}} г. {{res.date?.getHours()}}:{{res.date?.getMinutes()}} ч.</span>;
+          Дата: <span class="color-orange">{{res.date?.getDate()}}.{{res.date?.getMonth() + 1}}.{{res.date?.getFullYear()}} г. {{res.date?.getHours()}}:{{res.date?.getMinutes()}} ч.</span>;
           Статус:
           <span class="text-success" *ngIf="res.isApproved == 1">Одобрена</span>
           <span class="text-danger" *ngIf="res.isApproved == 0">Отакзана</span>
@@ -169,7 +169,7 @@
         <div class="card-body overflow-auto" style="height: 80%">
           <ul class="list-group">
             <li *ngFor="let event of selectedPlace?.events" class="list-group-item">
-              {{event.name}} {{event.date.getDate()}}.{{event.date.getMonth()}}.{{event.date.getFullYear()}} г.
+              {{event.name}} {{event.date.getDate()}}.{{event.date.getMonth() + 1}}.{{event.date.getFullYear()}} г.
             </li>
           </ul>
         </div>

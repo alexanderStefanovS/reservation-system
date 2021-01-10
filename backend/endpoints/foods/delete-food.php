@@ -1,6 +1,7 @@
 <?php
 
 require_once "../../db/db.php";
+require_once "../../logger/logger.php";
 
 session_start();
 

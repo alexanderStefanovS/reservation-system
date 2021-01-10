@@ -92,6 +92,7 @@ export class UsersViewPanelComponent implements OnInit {
   private loadEvents(placesId: number, index: number) {
     this.dataLoader.loadByParam(EventModel.urlGetByPlacesId, `placesId=${placesId}`)
       .subscribe((data: any) => {
+        this.places[index].events = [];
         data.value.forEach((event: EventModel) => {
           this.places[index].events.push(new EventModel(event));
         });
@@ -162,6 +163,7 @@ export class UsersViewPanelComponent implements OnInit {
         console.log(data);
         this.message = data.message;
         this.successSwal.fire();
+        location.reload();
       });
   }
 

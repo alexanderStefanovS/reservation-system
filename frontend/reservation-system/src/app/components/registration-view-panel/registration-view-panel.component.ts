@@ -65,7 +65,15 @@ export class RegistrationViewPanelComponent implements OnInit {
   }
 
   onClickRegister() {
-    this.dataLoader.create(UserModel.urlCreate, this.user)
+    const saveUser = {
+      firstName: this.user.firstName,
+      lastName: this.user.lastName,
+      email: this.user.email,
+      phone: this.user.phone,
+      password: this.user.password,
+      rolesId: this.user.rolesId
+    }
+    this.dataLoader.create(UserModel.urlCreate, saveUser)
       .subscribe((data: any) => {
         if (this.isManager) {
           this.savePlace(data.value);

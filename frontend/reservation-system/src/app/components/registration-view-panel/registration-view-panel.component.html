@@ -12,7 +12,7 @@
         </div>
         <div class="form-group">
           <label for="email">Email<span class="text-danger">*</span></label>
-          <input #email="ngModel" id="email" type="email" name="email" [(ngModel)]="user.email" class="form-control"
+          <input #email="ngModel" id="email" type="email" name="email" [(ngModel)]="user.email" class="form-control" pattern="[a-z0-9]+@[a-z]+\.[a-z]+"
             placeholder="Въведете email" [ngClass]="{'is-invalid': email.invalid, 'is-valid': email.valid}" required>
         </div>
         <div class="form-group">
